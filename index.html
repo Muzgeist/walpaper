@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Wallpaper</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Fundo -->
+    <div class="backgroundGradient"></div>
+    <div class="backgroundGlow"></div>
+
+    <!-- Conteúdo -->
+    <main class="container">
+
+        <header class="hero">
+            <h1>Bem-vindo.</h1>
+            <p>Escolha um wallpaper e veja toda a interface adaptar automaticamente sua paleta de cores.</p>
+        </header>
+
+        <!-- Barra de progresso do autoplay -->
+        <div class="autoplayBar" id="autoplayBar" aria-hidden="true">
+            <div class="autoplayBarFill" id="autoplayFill"></div>
+        </div>
+
+        <!-- Carrossel -->
+        <section class="carousel">
+
+            <button id="previous" class="arrow" aria-label="Imagem anterior">❮</button>
+
+            <div class="viewer">
+                <img id="wallpaper" src="wallpapers/agatha.jpg" crossorigin="anonymous" alt="Wallpaper">
+                <canvas id="glCanvas"></canvas>
+
+                <button id="infoBtn" class="infoBtn" aria-label="Ver detalhes do wallpaper">ⓘ</button>
+            </div>
+
+            <button id="next" class="arrow" aria-label="Próxima imagem">❯</button>
+
+        </section>
+
+        <!-- Controles -->
+        <section class="controls">
+            <div class="dots"></div>
+
+            <label class="lockContainer">
+                <input id="lockWallpaper" type="checkbox">
+                <span class="checkmark"></span>
+                Travar wallpaper
+            </label>
+        </section>
+
+    </main>
+
+    <!-- Modal de detalhes -->
+    <div class="modalOverlay" id="modalOverlay">
+        <div class="modalCard">
+            <button class="modalClose" id="modalClose" aria-label="Fechar">✕</button>
+
+            <h2 id="modalName">Nome do wallpaper</h2>
+
+            <p class="modalDim" id="modalDimensions">0 × 0 px</p>
+
+            <div class="modalColors" id="modalColors"></div>
+
+            <a id="modalDownload" class="downloadBtn" download>⭳ Baixar wallpaper</a>
+        </div>
+    </div>
+
+    <!-- Biblioteca que extrai as cores -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.4.0/color-thief.min.js"></script>
+
+    <!-- Script principal -->
+    <script src="script.js"></script>
+
+</body>
+</html>

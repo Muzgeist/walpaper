@@ -16,68 +16,277 @@
     <div class="backgroundGradient"></div>
     <div class="backgroundGlow"></div>
 
-    <!-- Conteúdo -->
-    <main class="container">
+    <!-- Halo que segue o cursor -->
+    <div class="cursorGlow" id="cursorGlow" aria-hidden="true"></div>
 
-        <header class="hero">
-            <h1>Bem-vindo.</h1>
-            <p>Escolha um wallpaper e veja toda a interface adaptar automaticamente sua paleta de cores.</p>
-        </header>
+    <!-- Splash inicial: o logo se formando em partículas -->
+    <div class="splashScreen" id="splashScreen" aria-hidden="true">
+        <canvas id="splashCanvas"></canvas>
+        <p class="splashTagline">papéis de parede vivos</p>
+    </div>
 
-        <!-- Barra de progresso do autoplay -->
-        <div class="autoplayBar" id="autoplayBar" aria-hidden="true">
-            <div class="autoplayBarFill" id="autoplayFill"></div>
-        </div>
+    <!-- Navegação principal -->
+    <nav class="topNav" id="topNav">
+        <button class="navBtn active" data-screen="inicio" type="button">Início</button>
+        <button class="navBtn" data-screen="sobre" type="button">Sobre</button>
+        <button class="navBtn" data-screen="contato" type="button">Contato</button>
+    </nav>
 
-        <!-- Carrossel -->
-        <section class="carousel">
+    <!-- Overlay da animação de vidro quebrando -->
+    <div class="shatterOverlay" id="shatterOverlay" aria-hidden="true"></div>
 
-            <button id="previous" class="arrow" aria-label="Imagem anterior">❮</button>
+    <!-- ===================================================== -->
+    <!-- TELA: INÍCIO                                           -->
+    <!-- ===================================================== -->
+    <section class="screen active" id="screen-inicio" data-screen="inicio">
+        <main class="container">
 
-            <div class="viewer">
-                <img id="wallpaper" src="wallpapers/agatha.jpg" crossorigin="anonymous" alt="Wallpaper">
-                <canvas id="glCanvas"></canvas>
+            <header class="hero">
+                <h1>Bem-vindo.</h1>
+                <p>Escolha um wallpaper e veja toda a interface adaptar automaticamente sua paleta de cores.</p>
+            </header>
 
-                <button id="infoBtn" class="infoBtn" aria-label="Ver detalhes do wallpaper">ⓘ</button>
+            <!-- Barra de progresso do autoplay -->
+            <div class="autoplayBar" id="autoplayBar" aria-hidden="true">
+                <div class="autoplayBarFill" id="autoplayFill"></div>
             </div>
 
-            <button id="next" class="arrow" aria-label="Próxima imagem">❯</button>
+            <!-- Carrossel -->
+            <section class="carousel">
 
-        </section>
+                <button id="previous" class="arrow" aria-label="Imagem anterior">❮</button>
 
-        <!-- Controles -->
-        <section class="controls">
-            <div class="dots"></div>
+                <div class="viewer">
+                    <img id="wallpaper" src="wallpapers/agatha.jpg" crossorigin="anonymous" alt="Wallpaper">
+                    <canvas id="glCanvas"></canvas>
 
-            <label class="lockContainer">
-                <input id="lockWallpaper" type="checkbox">
-                <span class="checkmark"></span>
-                Travar wallpaper
-            </label>
-        </section>
+                    <button id="infoBtn" class="infoBtn" aria-label="Ver detalhes do wallpaper">ⓘ</button>
+                </div>
 
-    </main>
+                <button id="next" class="arrow" aria-label="Próxima imagem">❯</button>
 
-    <!-- Modal de detalhes -->
-    <div class="modalOverlay" id="modalOverlay">
-        <div class="modalCard">
-            <button class="modalClose" id="modalClose" aria-label="Fechar">✕</button>
+            </section>
 
-            <h2 id="modalName">Nome do wallpaper</h2>
+            <!-- Controles -->
+            <section class="controls">
+                <div class="dots"></div>
 
-            <p class="modalDim" id="modalDimensions">0 × 0 px</p>
+                <label class="lockContainer">
+                    <input id="lockWallpaper" type="checkbox">
+                    <span class="checkmark"></span>
+                    Travar wallpaper
+                </label>
+            </section>
 
-            <div class="modalColors" id="modalColors"></div>
+        </main>
 
-            <a id="modalDownload" class="downloadBtn" download>⭳ Baixar wallpaper</a>
+        <!-- Modal de detalhes -->
+        <div class="modalOverlay" id="modalOverlay">
+            <div class="modalCard">
+                <button class="modalClose" id="modalClose" aria-label="Fechar">✕</button>
+
+                <h2 id="modalName">Nome do wallpaper</h2>
+
+                <p class="modalDim" id="modalDimensions">0 × 0 px</p>
+
+                <div class="modalColors" id="modalColors"></div>
+
+                <a id="modalDownload" class="downloadBtn" download>⭳ Baixar wallpaper</a>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- TELA: SOBRE                                            -->
+    <!-- ===================================================== -->
+    <section class="screen" id="screen-sobre" data-screen="sobre">
+        <main class="infoPage">
+
+            <header class="infoHero">
+                <span class="infoTag">Sobre nós</span>
+                <h1>Lumen Wallpapers</h1>
+                <p>Papéis de parede que se adaptam a você — não o contrário.</p>
+            </header>
+
+            <div class="infoGrid">
+
+                <article class="infoCard infoCardWide revealOnScroll">
+                    <h2>Nossa história</h2>
+                    <p>
+                        A Lumen Wallpapers nasceu em 2019, em Belo Horizonte, a partir de um
+                        grupo pequeno de designers, fotógrafos e desenvolvedores cansados de
+                        ver papéis de parede tratados como um detalhe sem importância. A ideia
+                        inicial era simples: e se a interface ao redor da imagem também
+                        respirasse junto com ela?
+                    </p>
+                    <p>
+                        O primeiro protótipo era um script que lia as cores dominantes de uma
+                        foto e repintava um site inteiro em tempo real. O resultado encantou
+                        tanto a própria equipe que, em poucos meses, esse experimento se tornou
+                        o núcleo de um produto: uma plataforma de wallpapers dinâmicos, onde
+                        cada imagem carrega sua própria atmosfera — e essa atmosfera contagia
+                        tudo em volta.
+                    </p>
+                    <p>
+                        Desde então, já organizamos coleções com curadoria artística, criamos
+                        ferramentas de extração de paleta em tempo real e construímos um
+                        catálogo voltado especialmente para quem gosta de games, animes e arte
+                        digital, sempre com foco em qualidade visual e respeito aos artistas.
+                    </p>
+                </article>
+
+                <div class="infoGridRow">
+
+                    <article class="infoCard revealOnScroll">
+                        <h2>Missão</h2>
+                        <p>
+                            Tornar a personalização visual algo vivo: transformar a escolha de um
+                            simples papel de parede em uma experiência sensorial completa, onde
+                            cor, movimento e identidade caminham juntos.
+                        </p>
+                    </article>
+
+                    <article class="infoCard revealOnScroll">
+                        <h2>Visão</h2>
+                        <p>
+                            Ser referência em interfaces que se adaptam dinamicamente ao conteúdo
+                            visual, levando essa tecnologia de extração de paleta e transições
+                            autorais para muito além dos wallpapers — para qualquer tela que mereça
+                            sentir a imagem que carrega.
+                        </p>
+                    </article>
+
+                    <article class="infoCard revealOnScroll">
+                        <h2>Valores</h2>
+                        <ul class="infoList">
+                            <li>Design com intenção, nunca decoração vazia</li>
+                            <li>Respeito à autoria das artes exibidas</li>
+                            <li>Performance — beleza não pode custar fluidez</li>
+                            <li>Transparência com a comunidade que usa o produto</li>
+                        </ul>
+                    </article>
+
+                </div>
+
+            </div>
+
+            <footer class="infoTimeline">
+                <div class="timelineItem revealOnScroll">
+                    <span class="timelineYear">2019</span>
+                    <p>Fundação da Lumen e primeiro protótipo de tema dinâmico por cor.</p>
+                </div>
+                <div class="timelineItem revealOnScroll">
+                    <span class="timelineYear">2021</span>
+                    <p>Lançamento do catálogo curado de wallpapers de games e animes.</p>
+                </div>
+                <div class="timelineItem revealOnScroll">
+                    <span class="timelineYear">2023</span>
+                    <p>Nova engine de transição com partículas via WebGL.</p>
+                </div>
+                <div class="timelineItem revealOnScroll">
+                    <span class="timelineYear">Hoje</span>
+                    <p>Construindo a próxima geração de interfaces reativas a imagem.</p>
+                </div>
+            </footer>
+
+        </main>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- TELA: CONTATO                                          -->
+    <!-- ===================================================== -->
+    <section class="screen" id="screen-contato" data-screen="contato">
+        <main class="infoPage">
+
+            <header class="infoHero">
+                <span class="infoTag">Fale com a gente</span>
+                <h1>Contato</h1>
+                <p>Dúvidas, sugestões de wallpapers ou parcerias — manda pra nós.</p>
+            </header>
+
+            <div class="contactGrid">
+
+                <form class="contactForm revealOnScroll" id="contactForm">
+                    <label class="formField">
+                        <span>Nome</span>
+                        <input type="text" name="nome" placeholder="Seu nome" required>
+                    </label>
+
+                    <label class="formField">
+                        <span>E-mail</span>
+                        <input type="email" name="email" placeholder="seu@email.com" required>
+                    </label>
+
+                    <label class="formField">
+                        <span>Assunto</span>
+                        <input type="text" name="assunto" placeholder="Sobre o que você quer falar?">
+                    </label>
+
+                    <label class="formField">
+                        <span>Mensagem</span>
+                        <textarea name="mensagem" rows="5" placeholder="Escreva sua mensagem aqui..." required></textarea>
+                    </label>
+
+                    <button type="submit" class="downloadBtn contactSubmit">Enviar mensagem</button>
+
+                    <p class="formFeedback" id="formFeedback" aria-live="polite"></p>
+                </form>
+
+                <aside class="contactInfo revealOnScroll">
+                    <h2>Outros canais</h2>
+
+                    <div class="contactItem">
+                        <span class="contactIcon">✉</span>
+                        <div>
+                            <strong>E-mail</strong>
+                            <p>contato@lumenwallpapers.com</p>
+                        </div>
+                    </div>
+
+                    <div class="contactItem">
+                        <span class="contactIcon">☎</span>
+                        <div>
+                            <strong>Telefone</strong>
+                            <p>(31) 4002-8922</p>
+                        </div>
+                    </div>
+
+                    <div class="contactItem">
+                        <span class="contactIcon">📍</span>
+                        <div>
+                            <strong>Endereço</strong>
+                            <p>Belo Horizonte, MG — Brasil</p>
+                        </div>
+                    </div>
+
+                    <div class="contactItem">
+                        <span class="contactIcon">🕑</span>
+                        <div>
+                            <strong>Atendimento</strong>
+                            <p>Seg. a Sex., 9h às 18h</p>
+                        </div>
+                    </div>
+                </aside>
+
+            </div>
+
+        </main>
+    </section>
 
     <!-- Biblioteca que extrai as cores -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.4.0/color-thief.min.js"></script>
 
-    <!-- Script principal -->
+    <!-- Biblioteca usada para capturar a tela atual antes de "quebrá-la" -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <!-- Script principal (wallpapers) -->
     <script src="script.js"></script>
+
+    <!-- Efeitos visuais e sonoros: cursor glow, scroll reveal, som de vidro, splash -->
+    <script src="effects.js"></script>
+
+    <!-- Script de navegação e efeito de vidro quebrando -->
+    <script src="navigation.js"></script>
 
 </body>
 </html>

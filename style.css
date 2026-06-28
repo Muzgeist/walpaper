@@ -337,3 +337,352 @@ body{
 }
 
 .downloadBtn:hover{filter:brightness(1.15);transform:translateY(-2px)}
+
+/* ============================================================ */
+/* NAVEGAÇÃO PRINCIPAL                                          */
+/* ============================================================ */
+.topNav{
+    position:fixed;
+    top:clamp(14px,3vw,28px);
+    right:clamp(14px,3vw,28px);
+    display:flex;
+    gap:10px;
+    z-index:80;
+}
+
+.navBtn{
+    border:1px solid rgba(255,255,255,.18);
+    background:rgba(255,255,255,.07);
+    backdrop-filter:blur(14px);
+    color:var(--text);
+    font-family:"Poppins",sans-serif;
+    font-size:clamp(.75rem,1.6vw,.9rem);
+    font-weight:500;
+    padding:10px 18px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:.3s;
+    letter-spacing:.2px;
+}
+
+.navBtn:hover{background:var(--primary);border-color:var(--primary);transform:translateY(-2px);box-shadow:0 8px 20px var(--shadow)}
+.navBtn.active{background:var(--primary);border-color:var(--primary);box-shadow:0 0 18px var(--primary)}
+
+@media(max-width:480px){
+    .navBtn{padding:8px 13px;font-size:.7rem}
+}
+
+/* ============================================================ */
+/* TELAS (inicio / sobre / contato)                              */
+/* ============================================================ */
+.screen{
+    display:none;
+    width:100%;
+    min-height:100vh;
+}
+
+.screen.active{display:block}
+
+/* ============================================================ */
+/* PÁGINAS DE INFORMAÇÃO (Sobre / Contato — base comum)         */
+/* ============================================================ */
+.infoPage{
+    width:100%;
+    min-height:100vh;
+    max-width:1100px;
+    margin:0 auto;
+    padding:clamp(110px,14vw,150px) clamp(20px,5vw,50px) 60px;
+    display:flex;
+    flex-direction:column;
+    gap:clamp(30px,5vw,50px);
+}
+
+.infoHero{max-width:720px}
+.infoTag{
+    display:inline-block;
+    padding:6px 16px;
+    border-radius:999px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.15);
+    font-size:.78rem;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+    opacity:.85;
+    margin-bottom:14px;
+}
+
+.infoHero h1{
+    font-size:clamp(1.9rem,5vw,3.2rem);
+    font-weight:700;
+    line-height:1.25;
+    padding-top:.15em;
+    margin-bottom:10px;
+    text-shadow:0 0 20px rgba(0,0,0,.3);
+}
+.infoHero p{font-size:clamp(.9rem,2vw,1.1rem);opacity:.82;line-height:1.6}
+
+/* Grid "Sobre" */
+.infoGrid{
+    display:flex;
+    flex-direction:column;
+    gap:clamp(16px,3vw,26px);
+}
+
+.infoGridRow{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:clamp(16px,3vw,26px);
+    align-items:start;
+}
+
+.infoCard{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:20px;
+    padding:clamp(20px,4vw,30px);
+    backdrop-filter:blur(10px);
+    transition:.35s;
+    height:fit-content;
+}
+
+.infoCardWide{
+    max-width:780px;
+}
+
+.infoCard:hover{transform:translateY(-4px);border-color:var(--primary);box-shadow:0 15px 40px var(--shadow)}
+.infoCard h2{font-size:1.2rem;margin-bottom:12px;color:var(--accent)}
+.infoCard p{font-size:.92rem;line-height:1.7;opacity:.85;margin-bottom:10px}
+.infoCard p:last-child{margin-bottom:0}
+
+.infoList{list-style:none;display:flex;flex-direction:column;gap:10px}
+.infoList li{font-size:.92rem;opacity:.85;padding-left:22px;position:relative;line-height:1.5}
+.infoList li::before{content:"✦";position:absolute;left:0;color:var(--primary)}
+
+@media(max-width:760px){
+    .infoGridRow{grid-template-columns:1fr}
+}
+
+/* Timeline */
+.infoTimeline{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    padding-top:10px;
+    border-top:1px solid rgba(255,255,255,.1);
+}
+
+.timelineItem{position:relative;padding-top:18px}
+.timelineItem::before{
+    content:"";
+    position:absolute;
+    top:0;left:0;
+    width:34px;height:3px;
+    border-radius:3px;
+    background:var(--primary);
+}
+.timelineYear{display:block;font-weight:700;font-size:1.1rem;margin-bottom:6px;color:var(--accent)}
+.timelineItem p{font-size:.82rem;opacity:.78;line-height:1.5}
+
+@media(max-width:760px){
+    .infoTimeline{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:480px){
+    .infoTimeline{grid-template-columns:1fr}
+}
+
+/* ============================================================ */
+/* PÁGINA DE CONTATO                                             */
+/* ============================================================ */
+.contactGrid{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:clamp(20px,4vw,34px);
+    align-items:start;
+}
+
+@media(max-width:760px){
+    .contactGrid{grid-template-columns:1fr}
+}
+
+.contactForm{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:20px;
+    padding:clamp(20px,4vw,30px);
+    backdrop-filter:blur(10px);
+}
+
+.formField{display:flex;flex-direction:column;gap:7px;font-size:.85rem;opacity:.9}
+
+.formField input,
+.formField textarea{
+    font-family:"Poppins",sans-serif;
+    background:rgba(0,0,0,.25);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:12px;
+    padding:12px 14px;
+    color:var(--text);
+    font-size:.9rem;
+    resize:vertical;
+    transition:.25s;
+}
+
+.formField input:focus,
+.formField textarea:focus{
+    outline:none;
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px rgba(255,255,255,.06);
+}
+
+.contactSubmit{border:none;cursor:pointer;margin-top:4px}
+
+.formFeedback{
+    font-size:.85rem;
+    min-height:1.2em;
+    opacity:0;
+    transition:opacity .3s ease;
+    color:var(--accent);
+}
+.formFeedback.show{opacity:1}
+
+.contactInfo{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:20px;
+    padding:clamp(20px,4vw,30px);
+    backdrop-filter:blur(10px);
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.contactInfo h2{font-size:1.1rem;margin-bottom:4px;color:var(--accent)}
+
+.contactItem{display:flex;align-items:flex-start;gap:14px}
+.contactIcon{
+    flex-shrink:0;
+    width:38px;height:38px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--primary);
+    font-size:16px;
+}
+.contactItem strong{display:block;font-size:.85rem;margin-bottom:3px}
+.contactItem p{font-size:.82rem;opacity:.78;line-height:1.4}
+
+/* ============================================================ */
+/* EFEITO DE TRANSIÇÃO — TELA RACHANDO E SE QUEBRANDO            */
+/* ============================================================ */
+.shatterOverlay{
+    position:fixed;
+    inset:0;
+    z-index:90;
+    pointer-events:none;
+    display:none;
+}
+
+.shatterOverlay.active{display:block}
+
+.shatterShard{
+    position:absolute;
+    top:0;left:0;
+    background-repeat:no-repeat;
+    will-change:transform,opacity;
+    backface-visibility:hidden;
+}
+
+.shatterCracks{
+    position:absolute;
+    top:0;left:0;
+    overflow:visible;
+    opacity:0;
+    transition:opacity .25s ease;
+}
+
+.shatterCracks.show{opacity:1}
+.shatterCracks.fade{opacity:0;transition:opacity .35s ease}
+
+.shatterCracks path{
+    fill:none;
+    stroke:rgba(255,255,255,.9);
+    stroke-width:1.4;
+    stroke-linecap:round;
+    filter:drop-shadow(0 0 6px rgba(255,255,255,.6));
+}
+
+/* ============================================================ */
+/* HALO QUE SEGUE O CURSOR                                       */
+/* ============================================================ */
+.cursorGlow{
+    position:fixed;
+    top:0;left:0;
+    width:420px;
+    height:420px;
+    margin-left:-210px;
+    margin-top:-210px;
+    border-radius:50%;
+    background:radial-gradient(circle, var(--primary) 0%, transparent 70%);
+    opacity:.18;
+    filter:blur(10px);
+    pointer-events:none;
+    z-index:1;
+    transform:translate3d(-9999px,-9999px,0);
+    will-change:transform;
+    transition:opacity .4s ease;
+}
+
+.cursorGlow.hidden{opacity:0}
+
+@media(max-width:760px), (hover:none){
+    .cursorGlow{display:none}
+}
+
+/* ============================================================ */
+/* SCROLL REVEAL (Sobre / Contato)                               */
+/* ============================================================ */
+.revealOnScroll{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1);
+}
+
+.revealOnScroll.revealed{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* ============================================================ */
+/* SPLASH INICIAL — LOGO SE FORMANDO EM PARTÍCULAS               */
+/* ============================================================ */
+.splashScreen{
+    position:fixed;
+    inset:0;
+    z-index:999;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+    background:var(--background);
+    transition:opacity .6s ease;
+}
+
+.splashScreen.fadeOut{opacity:0;pointer-events:none}
+.splashScreen.removed{display:none}
+
+#splashCanvas{
+    width:min(90vw,640px);
+    height:min(40vh,220px);
+}
+
+.splashTagline{
+    font-family:"Poppins",sans-serif;
+    font-size:.85rem;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    opacity:.55;
+    color:var(--text);
+}

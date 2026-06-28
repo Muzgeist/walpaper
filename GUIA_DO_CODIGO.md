@@ -231,3 +231,104 @@ python -m http.server 8000
 ```
 
 Depois acesse `http://localhost:8000` no navegador.
+
+---
+
+## 7. Navegação entre telas e efeito de "vidro quebrando" (`navigation.js`)
+
+Esse arquivo novo cuida de três coisas: o menu no canto superior
+direito, a troca entre as telas (Início / Sobre / Contato) e a
+animação de transição em forma de vidro se rachando e se
+despedaçando.
+
+### 7.1 Estrutura no HTML
+Agora a página tem 3 `<section class="screen" data-screen="...">`:
+`screen-inicio` (o carrossel original), `screen-sobre` (história da
+empresa fictícia "Lumen Wallpapers") e `screen-contato` (formulário +
+informações de contato). Só a tela com a classe `.active` fica
+visível — isso é controlado 100% via JS, nunca diretamente no HTML
+(exceto a tela inicial, que já nasce `.active`).
+
+### 7.2 Como o efeito de vidro funciona, passo a passo
+1. **`html2canvas`** (biblioteca via CDN) tira uma "foto" da tela
+   atual e gera uma imagem (`data:image/png...`).
+2. A tela de destino já é marcada como `.active` nesse momento — ela
+   fica pronta "por baixo", só que escondida atrás da foto.
+3. **`buildShardGeometry()`** cria uma grade de pontos com um
+   pequeno "tremor" aleatório (jitter) e divide cada célula da grade
+   em 2 triângulos — esses triângulos são os "cacos" de vidro.
+4. Cada caco é um `<div>` com a foto da tela antiga como
+   `background-image` e um `clip-path: polygon(...)` que corta
+   exatamente o pedaço daquele triângulo — juntando todos os cacos,
+   dá pra ver a tela antiga inteira, intacta.
+5. **`buildCracksSVG()`** desenha linhas de rachadura saindo do botão
+   que foi clicado até pontos da grade, usando o truque de
+   `stroke-dasharray`/`stroke-dashoffset` para fazer a linha parecer
+   que está sendo "desenhada" rapidamente.
+6. Por ~260ms só as rachaduras aparecem (tela "trinca" mas ainda
+   não quebrou). Depois disso, cada caco recebe uma `transform`
+   (translação + rotação + escala) e `opacity: 0`, com um pequeno
+   atraso (`delay`) proporcional à distância do ponto clicado — os
+   cacos mais próximos do clique se movem primeiro, como um impacto
+   real.
+7. Ao final de ~3 segundos (`SHATTER_TOTAL_MS`), o overlay é limpo e
+   a tela nova (que já estava por baixo, intacta o tempo todo) fica
+   totalmente visível.
+
+> Se `html2canvas` não carregar (ex: sem internet), o código cai num
+> modo simples: troca a tela direto, sem efeito, sem travar o site.
+
+### 7.3 Formulário de contato
+`#contactForm` não tem backend conectado — o `submit` é interceptado
+(`e.preventDefault()`) e só mostra uma mensagem de confirmação
+(`#formFeedback`). Para conectar a um backend real, troque o
+`addEventListener("submit", ...)` por uma chamada `fetch()` para a
+sua API.
+
+---
+
+## 8. Efeitos extras (`effects.js`)
+
+Arquivo novo, focado só em "detalhes que impressionam" — não interfere
+na lógica de wallpapers nem na de navegação.
+
+### 8.1 Halo que segue o cursor (`initCursorGlow`)
+Um `<div id="cursorGlow">` fixo no body, sempre presente. A cada
+`mousemove`, guardamos a posição alvo (`targetX/targetY`) e um loop
+em `requestAnimationFrame` vai "perseguindo" essa posição com
+interpolação (`lerp`, fator `0.14`) — é isso que dá a sensação de o
+halo flutuar atrás do mouse, em vez de colar instantaneamente nele.
+Desativado em telas sem hover (touch) via `matchMedia`.
+
+### 8.2 Scroll reveal (`initScrollReveal`)
+Qualquer elemento com a classe `.revealOnScroll` nasce invisível e
+deslocado (`opacity:0; translateY(28px)` no CSS). Um
+`IntersectionObserver` observa todos eles; quando entram na tela,
+ganham a classe `.revealed` (que volta a opacidade/posição ao
+normal) com um pequeno atraso em cascata. Usado nos cards da página
+Sobre, na timeline e nos blocos da página Contato.
+
+### 8.3 Som de vidro quebrando (`playCrackSound`)
+Não usa nenhum arquivo de áudio — o som é **gerado na hora** com a
+Web Audio API: um ruído branco filtrado (simulando o estouro) somado
+a 5–8 "tinks" agudos com frequência aleatória (os cacos menores).
+A função fica em `window.playCrackSound()` e é chamada pelo
+`navigation.js` exatamente no instante em que as rachaduras visuais
+aparecem. Como navegadores só liberam áudio depois de uma interação
+do usuário, o `AudioContext` é preparado no primeiro clique/tecla.
+
+### 8.4 Splash inicial com partículas (`initSplash`)
+Ao carregar a página, `#splashScreen` cobre tudo. Por baixo dos panos:
+1. Desenhamos o texto "LUMEN" num canvas auxiliar invisível.
+2. Lemos os pixels desse canvas (`getImageData`) e guardamos só os
+   pontos onde há texto — isso vira a lista de posições-alvo das
+   partículas.
+3. Cada partícula nasce numa posição aleatória da tela e anima até
+   sua posição-alvo com um pequeno atraso individual e suavização
+   (`easeOutCubic`), criando o efeito de "se formar".
+4. Depois de formado, espera um instante e faz um fade-out do
+   splash, revelando o site por trás.
+
+Se algo travar (aba em segundo plano, etc.), um `setTimeout` de
+segurança força o fechamento do splash — ele nunca prende o usuário
+numa tela de carregamento infinita.
